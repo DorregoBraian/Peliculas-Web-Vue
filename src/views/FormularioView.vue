@@ -1,15 +1,28 @@
 <template>
   <div>
-    <form action="" id="formulario">
+    <form action="https://formsubmit.co/5945ea4ae0629a4055d54e11ae4f5abc" method="POST" id="formulario">
       <h2>Dejanos Tu Opinion</h2>
       <div class="formulario-item">
         <label for="nombre">Nombre: </label>
-        <input type="text" class="formulario__input" id="nombre" autofocus />
+        <input
+          type="text"
+          class="formulario__input"
+          id="nombre"
+          name="Nombre"
+          autofocus
+          v-model="nombre"
+        />
       </div>
 
       <div class="formulario-item">
         <label for="apellido">Apellido: </label>
-        <input type="text" class="formulario__input" id="apellido" />
+        <input
+          type="text"
+          class="formulario__input"
+          id="apellido"
+          name="Apellido"
+          v-model="apellido"
+        />
       </div>
 
       <div class="formulario-item">
@@ -19,7 +32,7 @@
 
       <div class="formulario-item">
         <label for="genero">Genero: </label>
-        <select name="genero" id="genero">
+        <select name="" id="genero">
           <option value="default" selected disabled hidden>- -</option>
           <option value="hombre">Hombre</option>
           <option value="mujer">Mujer</option>
@@ -29,7 +42,7 @@
 
       <div class="formulario-item">
         <label for="valoracion">Valoración de la Pagina:</label>
-        <select name="valoracion" id="valoracion">
+        <select name="Valoración-de-la-Pagina" id="valoracion">
           <option value="default" selected disabled hidden>- -</option>
           <option value="me encanto">Me encantó</option>
           <option value="cumple con mis expectativas">
@@ -43,16 +56,24 @@
 
       <div class="formulario-item">
         <label for="email">Email: </label>
-        <input type="text" class="formulario__input" id="email" />
+        <input
+          type="text"
+          class="formulario__input"
+          id="email"
+          name="Email"
+          v-model="email"
+          @input="validarEmail"
+        />
+        <p v-if="email && !emailValid" class="error-message">Correo electrónico no válido</p>
       </div>
 
       <div class="formulario-item">
         <label for="comentario">Comentario: </label>
-        <textarea name="" id="comentario" cols="30" rows="3"></textarea>
+        <textarea name="Comentario" id="comentario" cols="60" rows="15"></textarea>
       </div>
 
       <div id="botones" class="formulario-item">
-        <button class="form-button" id="button-enviar" type="button">
+        <button class="form-button" id="button-enviar" type="submit">
           Enviar
         </button>
         <button class="form-button" id="button-cancelar" type="button">
@@ -63,6 +84,9 @@
         </button>
       </div>
     </form>
+
+    <input type="hidden" name="_next" value="http://localhost:8080/">
+    <input type="hidden" name="_captcha" value="false">
 
     <section id="modal-cancelar">
       <div id="modalcancelar" class="modal">
@@ -100,6 +124,26 @@
 export default {
   name: "FormularioView",
   props: {},
+  data() {
+    return {
+      nombre: "",
+      apellido: "",
+      email: "",
+      emailValid: true
+    };
+  },
+  methods: {
+    validarEmail() {
+      // Expresión regular para validar el formato del correo electrónico
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+      if (emailRegex.test(this.email)) {
+        this.emailValid = true;
+      } else {
+        this.emailValid = false;
+      }
+    },
+  },
 };
 </script>
 
@@ -122,7 +166,8 @@ export default {
 }
 
 #formulario h2 {
-  margin: 1% 0% 5% 0%;
+  margin: 0% 0% 5% 0%;
+  font-size: 250%;
 }
 
 #formulario input,
@@ -147,6 +192,10 @@ select {
 
 .formulario-item {
   margin: 0% 0% 3% 0%;
+  font-size: 150%;
+}
+button {
+  font-size: 80%;
 }
 
 /* The Modal (background) */
